@@ -26,8 +26,9 @@
     </tbody>
 </table>
 <form method="post" asp-action="Reserveren">
-    <input type="hidden" asp-for="VoorstellingsNrNavigation" value="@Model.VoorstellingsNrNavigation" />
-    <input type="hidden" asp-for="VoorstellingsNr" value="@Model.VoorstellingsNr" />
+    <input type="hidden" asp-for="VoorstellingsNr" value="@Model.VoorstellingsNrNavigation.VoorstellingsNr" />
+    @*<input type="hidden" asp-for="VoorstellingsNr" value="@Model.VoorstellingsNr" />
+        <input type="hidden" asp-for="VoorstellingsNr" value="@Model.VoorstellingsNr" />*@
     <table class="table table-striped">
         <tbody>
             <tr>

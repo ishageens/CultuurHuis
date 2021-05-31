@@ -59,6 +59,7 @@ namespace UI.Controllers
                 var serMandje = JsonConvert.SerializeObject(mandje);
                 HttpContext.Session.SetString("mandje", serMandje);
             }
+            reservatie.VoorstellingsNrNavigation= service.GetVoorstelling(reservatie.VoorstellingsNr);
             return View(reservatie);
         }
 
