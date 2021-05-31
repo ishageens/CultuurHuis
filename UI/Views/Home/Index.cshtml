@@ -1,0 +1,18 @@
+﻿@using Model.Entities
+@model List<Genre>
+@{
+    ViewData["Title"] = "Het CultuurHuis: Voorstellingen";
+}
+<h1>Het CultuurHuis: Voorstellingen</h1>
+@await Component.InvokeAsync("ReservatieMandjeLink")
+<table class="table table-striped">
+    <tr>
+        Klik op het gewenste genre
+    </tr>
+    <tr>
+        @foreach (var genre in Model)
+        {
+            <td>@Html.ActionLink($"{genre.GenreNaam}", "VoorstellingenPerGenre", new { ID = genre.GenreNr })</td>
+        }
+    </tr>
+</table>

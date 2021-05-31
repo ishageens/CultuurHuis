@@ -1,0 +1,30 @@
+﻿@using Model.Entities
+@model List<Voorstelling>
+@{
+    ViewData["Title"] = "Het CultuurHuis: Voorstellingen";
+}
+<h1>Het CultuurHuis: Voorstellingen</h1>
+@await Component.InvokeAsync("ReservatieMandjeLink")
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Titel</th>
+            <th>Uitvoerders</th>
+            <th>Vrije plaatsen</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var voorstelling in Model)
+        {
+            <tr>
+                <td>@voorstelling.Datum</td>
+                <td>@voorstelling.Titel</td>
+                <td>@voorstelling.Uitvoerders</td>
+                <td>@voorstelling.VrijePlaatsen</td>
+                <td>@Html.ActionLink("Reserveren", "Reserveren", new { ID = voorstelling.VoorstellingsNr }) </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,34 @@
+﻿@using Model.Entities
+@model List<Reservatie>
+@{
+    ViewData["Title"] = "Het CultuurHuis: Reservatiemandje";
+}
+<h1>Het CultuurHuis: Reservatiemandje</h1>
+@Html.ActionLink("Voorstellingen", "Index", "Home")
+@Html.ActionLink("Reservatie bevestigen", "ReservatieBevestigen", "Home")
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Titel</th>
+            <th>Uitvoerders</th>
+            <th>Prijs</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservatie in Model)
+        {
+            <tr>
+                <td>@reservatie.VoorstellingsNrNavigation.Datum</td>
+                <td>@reservatie.VoorstellingsNrNavigation.Titel</td>
+                <td>@reservatie.VoorstellingsNrNavigation.Uitvoerders</td>
+                <td>@Html.DisplayFor(f => reservatie.VoorstellingsNrNavigation.Prijs)</td>
+                <td><a href="@Url.Action("Verwijderen", new { ID = reservatie.VoorstellingsNr })">Verwijderen</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

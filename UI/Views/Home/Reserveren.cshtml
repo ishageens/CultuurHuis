@@ -1,0 +1,41 @@
+﻿@using Model.Entities
+@model Reservatie
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>Datum:</td>
+            <td>@Model.VoorstellingsNrNavigation.Datum</td>
+        </tr>
+        <tr>
+            <td>Titel:</td>
+            <td>@Model.VoorstellingsNrNavigation.Titel</td>
+        </tr>
+        <tr>
+            <td>Uitvoerders:</td>
+            <td>@Model.VoorstellingsNrNavigation.Uitvoerders</td>
+        </tr>
+        <tr>
+            <td>Prijs:</td>
+            <td>@Model.VoorstellingsNrNavigation.Prijs</td>
+        </tr>
+        <tr>
+            <td>Vrije plaatsen:</td>
+            <td>@Model.VoorstellingsNrNavigation.VrijePlaatsen</td>
+        </tr>
+    </tbody>
+</table>
+<form method="post" asp-action="Reserveren">
+    <input type="hidden" asp-for="VoorstellingsNrNavigation" value="@Model.VoorstellingsNrNavigation" />
+    <input type="hidden" asp-for="VoorstellingsNr" value="@Model.VoorstellingsNr" />
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>Gewenste plaatsen:</td>
+                <td><input asp-for="Plaatsen" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <div asp-validation-summary="All"></div>
+    <input type="submit" value="Reserveren" class="btn btn-primary" />
+</form>
