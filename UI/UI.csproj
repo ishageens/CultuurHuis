@@ -16,7 +16,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Views\Home\Components\" />
 		<Folder Include="wwwroot\images\" />
 	</ItemGroup>
 

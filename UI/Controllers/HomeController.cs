@@ -40,46 +40,6 @@ namespace UI.Controllers
             return View(service.VoorstellingenPerGenre(id));
         }
 
-        [HttpGet]
-        public IActionResult Reserveren(int id)
-        {
-            var voorstelling = service.GetVoorstelling(id);
-            var reservatie = new Reservatie { VoorstellingsNr = id, VoorstellingsNrNavigation = voorstelling };
-            return View(reservatie);
-        }
-
-        [HttpPost]
-        public IActionResult Reserveren(Reservatie reservatie)
-        {
-            if (this.ModelState.IsValid)
-            {
-                var mandje = HttpContext.Session.GetString("mandje");
-                var deSerMandje = string.IsNullOrEmpty(mandje) ? new List<Reservatie>() : JsonConvert.DeserializeObject<List<Reservatie>>(mandje);
-                deSerMandje.Add(reservatie);
-                var serMandje = JsonConvert.SerializeObject(mandje);
-                HttpContext.Session.SetString("mandje", serMandje);
-            }
-            reservatie.VoorstellingsNrNavigation= service.GetVoorstelling(reservatie.VoorstellingsNr);
-            return View(reservatie);
-        }
-
-        public IActionResult Reservatiemandje()
-        {
-            var mandje = HttpContext.Session.GetString("mandje");
-            if (string.IsNullOrEmpty(mandje))
-            {
-                var list = new List<Reservatie>();
-                return View(list);
-
-            }
-            else
-            {
-                var list = JsonConvert.DeserializeObject<List<Reservatie>>(mandje);
-                return View(list);
-            }
-
-        }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

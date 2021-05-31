@@ -1,0 +1,21 @@
+﻿@using Model.Entities
+@model Klant
+@{
+    ViewData["Title"] = "Het CultuurHuis: Reservatiemandje";
+}
+<h1>Het CultuurHuis: Reservatiemandje</h1>
+@Html.ActionLink("Voorstellingen", "Index", "Home")
+@await Component.InvokeAsync("ReservatieMandjeLink")
+<br />
+<h2>Stap 1: Wie ben je?</h2>
+<form method="post" asp-action="KlantZoeken">
+    <div class="form-group">
+        <label asp-for="GebruikersNaam"></label>
+        <input asp-for="GebruikersNaam" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Paswoord"></label>
+        <input asp-for="Paswoord" />
+    </div>
+    <button type="submit" class="btn btn-primary">Zoek me op</button>
+</form>

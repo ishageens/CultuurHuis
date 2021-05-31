@@ -1,0 +1,46 @@
+﻿@using Model.Entities
+@model Reservatie
+@{
+    ViewData["Title"] = "Het CultuurHuis: Voorstellingen";
+}
+<h1>Het CultuurHuis: Voorstellingen</h1>
+
+@Html.ActionLink("Voorstellingen", "Index", "Home")
+@await Component.InvokeAsync("ReservatieMandjeLink")
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>Datum:</td>
+            <td>@Model.VoorstellingsNrNavigation.Datum</td>
+        </tr>
+        <tr>
+            <td>Titel:</td>
+            <td>@Model.VoorstellingsNrNavigation.Titel</td>
+        </tr>
+        <tr>
+            <td>Uitvoerders:</td>
+            <td>@Model.VoorstellingsNrNavigation.Uitvoerders</td>
+        </tr>
+        <tr>
+            <td>Prijs:</td>
+            <td>@Model.VoorstellingsNrNavigation.Prijs</td>
+        </tr>
+        <tr>
+            <td>Vrije plaatsen:</td>
+            <td>@Model.VoorstellingsNrNavigation.VrijePlaatsen</td>
+        </tr>
+    </tbody>
+</table>
+<form method="post" asp-action="Reserveren">
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>Gewenste plaatsen:</td>
+                <td><input disabled asp-for="Plaatsen" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <div asp-validation-summary="All"></div>
+    <input type="submit" value="Reserveren" disabled class="btn btn-danger" />
+</form>
+<img src="~/images/uitverkocht.png" alt="Uitverkocht" />

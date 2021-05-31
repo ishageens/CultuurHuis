@@ -33,6 +33,12 @@ namespace Model.Repositories
         public Klant GetKlant(int id)
         {
             return context.Klanten.Find(id);
+
+        }
+
+        public IEnumerable<Klant> GetKlanten()
+        {
+            return context.Klanten;
         }
 
         public Reservatie GetReservatie(int id)

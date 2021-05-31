@@ -16,5 +16,6 @@ namespace Model.Repositories
         List<Voorstelling> GetVoorstellingenPerGenre(int genreId);
         IEnumerable<Genre> GetAllGenres();
         Reservatie Add(Reservatie reservatie);
+        public IEnumerable<Klant> GetKlanten();
     }
 }

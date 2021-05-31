@@ -23,7 +23,7 @@
                 <td>@voorstelling.Titel</td>
                 <td>@voorstelling.Uitvoerders</td>
                 <td>@voorstelling.VrijePlaatsen</td>
-                <td>@Html.ActionLink("Reserveren", "Reserveren", new { ID = voorstelling.VoorstellingsNr }) </td>
+                <td>@Html.ActionLink("Reserveren", "Index", "Reservatie", new { ID = voorstelling.VoorstellingsNr }) </td>
             </tr>
         }
     </tbody>

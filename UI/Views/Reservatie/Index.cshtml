@@ -1,6 +1,11 @@
 ﻿@using Model.Entities
 @model Reservatie
-
+@{
+    ViewData["Title"] = "Het CultuurHuis: Voorstellingen";
+}
+<h1>Het CultuurHuis: Voorstellingen</h1>
+@Html.ActionLink("Voorstellingen", "Index", "Home")
+@await Component.InvokeAsync("ReservatieMandjeLink")
 <table class="table table-striped">
     <tbody>
         <tr>
@@ -25,10 +30,8 @@
         </tr>
     </tbody>
 </table>
-<form method="post" asp-action="Reserveren">
+<form method="post" asp-action="Index">
     <input type="hidden" asp-for="VoorstellingsNr" value="@Model.VoorstellingsNrNavigation.VoorstellingsNr" />
-    @*<input type="hidden" asp-for="VoorstellingsNr" value="@Model.VoorstellingsNr" />
-        <input type="hidden" asp-for="VoorstellingsNr" value="@Model.VoorstellingsNr" />*@
     <table class="table table-striped">
         <tbody>
             <tr>

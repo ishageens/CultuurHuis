@@ -33,5 +33,17 @@ namespace UI.Services
             var lijst = repo.GetVoorstelling(id);
             return lijst;
         }
+
+        public Klant KlantZoeken(Klant klant)
+        {
+            var gezochteKlant = from item in repo.GetKlanten()
+                                where item.GebruikersNaam == klant.GebruikersNaam
+                                select item;
+            var gevondenKlant = from k in gezochteKlant
+                                where k.Paswoord == klant.Paswoord
+                                select k;
+            var k1 = gevondenKlant.Count() == 0 ? null : gezochteKlant.First();
+            return k1;
+        }
     }
 }
