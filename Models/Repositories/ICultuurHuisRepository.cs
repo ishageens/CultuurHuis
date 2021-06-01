@@ -17,5 +17,6 @@ namespace Model.Repositories
         IEnumerable<Genre> GetAllGenres();
         Reservatie Add(Reservatie reservatie);
         public IEnumerable<Klant> GetKlanten();
+        public Voorstelling Update(Voorstelling gewijzigdeVoorstelling);
     }
 }

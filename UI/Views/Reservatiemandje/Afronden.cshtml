@@ -1,0 +1,36 @@
+﻿@using UI.Models
+@model List<AfrondenViewModel>
+@{
+    ViewData["Title"] = "Het CultuurHuis: Reservatiemandje";
+}
+<h1>Het CultuurHuis: Reservatiemandje</h1>
+@Html.ActionLink("Voorstellingen", "Index", "Home")
+@Html.ActionLink("Reservatie bevestigen", "Bevestigen", "Reservatiemandje")
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Titel</th>
+            <th>Uitvoerders</th>
+            <th>Prijs</th>
+            <th>Plaatsen</th>
+            <th>Status</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservatie in Model)
+        {
+            <tr>
+                <td>@reservatie.Datum</td>
+                <td>@reservatie.Titel</td>
+                <td>@reservatie.Uitvoerders</td>
+                <td>@Html.DisplayFor(f => reservatie.Prijs)</td>
+                <td>@reservatie.Plaatsen</td>
+                <td>@reservatie.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

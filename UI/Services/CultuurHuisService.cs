@@ -45,5 +45,30 @@ namespace UI.Services
             var k1 = gevondenKlant.Count() == 0 ? null : gezochteKlant.First();
             return k1;
         }
+
+        public List<Reservatie> Verwijderen(int id, List<Reservatie> mandje)
+        {
+            var reservatie = from item in mandje
+                             where item.VoorstellingsNr == id
+                             select item;
+            if (reservatie.Count() == 1)
+                mandje.Remove(reservatie.First());
+            return mandje;
+        }
+
+        public bool Afrekenen(Klant klant, Reservatie reservatie)
+        {
+            bool gelukt = false;
+            if (reservatie.VoorstellingsNrNavigation.VrijePlaatsen - reservatie.Plaatsen >= 0)
+            {
+                var voorstelling = reservatie.VoorstellingsNrNavigation;
+                reservatie.KlantNr = klant.KlantNr;
+                repo.Add(reservatie);
+                voorstelling.VrijePlaatsen -= reservatie.Plaatsen;
+                repo.Update(voorstelling);
+                gelukt = true;
+            }
+            return gelukt;
+        }
     }
 }

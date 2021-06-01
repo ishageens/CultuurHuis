@@ -6,29 +6,34 @@
 <h1>Het CultuurHuis: Reservatiemandje</h1>
 @Html.ActionLink("Voorstellingen", "Index", "Home")
 @Html.ActionLink("Reservatie bevestigen", "Bevestigen", "Reservatiemandje")
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Datum</th>
-            <th>Titel</th>
-            <th>Uitvoerders</th>
-            <th>Prijs</th>
-            <th></th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var reservatie in Model)
-        {
+@{
+    decimal totaal = 0;
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@reservatie.VoorstellingsNrNavigation.Datum</td>
-                <td>@reservatie.VoorstellingsNrNavigation.Titel</td>
-                <td>@reservatie.VoorstellingsNrNavigation.Uitvoerders</td>
-                <td>@Html.DisplayFor(f => reservatie.VoorstellingsNrNavigation.Prijs)</td>
-                <td><a href="@Url.Action("Verwijderen", new { ID = reservatie.VoorstellingsNr })">Verwijderen</a></td>
+                <th>Datum</th>
+                <th>Titel</th>
+                <th>Uitvoerders</th>
+                <th>Prijs</th>
+                <th></th>
+
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var reservatie in Model)
+            {
+                <tr>
+                    <td>@reservatie.VoorstellingsNrNavigation.Datum</td>
+                    <td>@reservatie.VoorstellingsNrNavigation.Titel</td>
+                    <td>@reservatie.VoorstellingsNrNavigation.Uitvoerders</td>
+                    <td>@Html.DisplayFor(f => reservatie.VoorstellingsNrNavigation.Prijs)</td>
+                    <td><a href="@Url.Action("Verwijderen", new { ID = reservatie.VoorstellingsNr })">Verwijderen</a></td>
+                </tr>
+                totaal += (reservatie.VoorstellingsNrNavigation.Prijs * reservatie.Plaatsen);
+            }
+
+        </tbody>
+    </table>
+    <p>Totaal te betalen = @string.Format("{0:#,##0.00}", totaal)</p>
+}
 

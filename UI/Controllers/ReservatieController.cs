@@ -40,19 +40,27 @@ namespace UI.Controllers
         [HttpPost]
         public IActionResult Index(Reservatie reservatie)
         {
-            if (this.ModelState.IsValid)
+            reservatie.VoorstellingsNrNavigation = service.GetVoorstelling(reservatie.VoorstellingsNr);
+            if (reservatie.Plaatsen > reservatie.VoorstellingsNrNavigation.VrijePlaatsen)
             {
-                var mandje = HttpContext.Session.GetString("mandje");
-                var deSerMandje = string.IsNullOrEmpty(mandje) ? new List<Reservatie>() : JsonConvert.DeserializeObject<List<Reservatie>>(mandje);
-                reservatie.VoorstellingsNrNavigation = service.GetVoorstelling(reservatie.VoorstellingsNr);
-                deSerMandje.Add(reservatie);
-                var serMandje = JsonConvert.SerializeObject(deSerMandje);
-                HttpContext.Session.SetString("mandje", serMandje);
-                return View("ReservatieGelukt", reservatie);
+                ModelState.AddModelError(string.Empty, "Aantal plaatsen overschrijdt het maximum");
+                return View(reservatie);
             }
             else
             {
-                return View(reservatie);
+                if (this.ModelState.IsValid)
+                {
+                    var mandje = HttpContext.Session.GetString("mandje");
+                    var deSerMandje = string.IsNullOrEmpty(mandje) ? new List<Reservatie>() : JsonConvert.DeserializeObject<List<Reservatie>>(mandje);
+                    deSerMandje.Add(reservatie);
+                    var serMandje = JsonConvert.SerializeObject(deSerMandje);
+                    HttpContext.Session.SetString("mandje", serMandje);
+                    return View("ReservatieGelukt", reservatie);
+                }
+                else
+                {
+                    return View(reservatie);
+                }
             }
         }
     }

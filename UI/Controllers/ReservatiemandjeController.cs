@@ -24,16 +24,8 @@ namespace UI.Controllers
         public IActionResult Index()
         {
             var mandje = HttpContext.Session.GetString("mandje");
-            if (string.IsNullOrEmpty(mandje))
-            {
-                var list = new List<Reservatie>();
-                return View(list);
-            }
-            else
-            {
-                var list = JsonConvert.DeserializeObject<List<Reservatie>>(mandje);
-                return View(list);
-            }
+            var list = string.IsNullOrEmpty(mandje) ? new List<Reservatie>() : JsonConvert.DeserializeObject<List<Reservatie>>(mandje);
+            return View(list);
         }
 
         public IActionResult Verwijderen(int id)
@@ -42,12 +34,8 @@ namespace UI.Controllers
             if (!string.IsNullOrEmpty(mandje))
             {
                 var deSerLijst = JsonConvert.DeserializeObject<List<Reservatie>>(mandje);
-                var reservatie = from item in deSerLijst
-                                 where item.VoorstellingsNr == id
-                                 select item;
-                if (reservatie.Count() == 1)
-                    deSerLijst.Remove(reservatie.First());
-                var serLijst = JsonConvert.SerializeObject(deSerLijst);
+                var lijst = service.Verwijderen(id, deSerLijst);
+                var serLijst = JsonConvert.SerializeObject(lijst);
                 HttpContext.Session.SetString("winkelmandje", serLijst);
             }
             return RedirectToAction("Index");
@@ -62,20 +50,45 @@ namespace UI.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                if (klant == null)
+                var k = service.KlantZoeken(klant);
+                if (k == null)
                 {
                     ModelState.AddModelError(string.Empty, "De inloggegevens zijn onjuist. Probeer opnieuw");
-                    return View("Index", klant);
+                    return View("Bevestigen", klant);
                 }
                 else
                 {
-                    return View("Index", "Genre");
+                    return View("Bevestigd", k);
                 }
             }
             else
             {
-                return View("Index", klant);
+                return View("Bevestigen", klant);
             }
+        }
+
+        public IActionResult Afronden(Klant klant)
+        {
+            var mandje = HttpContext.Session.GetString("mandje");
+            var deSerMandje = JsonConvert.DeserializeObject<List<Reservatie>>(mandje);
+            var lijstje = new List<AfrondenViewModel>();
+            bool gelukt;
+            foreach (var reservatie in deSerMandje)
+            {
+                gelukt = service.Afrekenen(klant, reservatie);
+                var item = new AfrondenViewModel
+                {
+                    Datum = reservatie.VoorstellingsNrNavigation.Datum,
+                    Titel = reservatie.VoorstellingsNrNavigation.Titel,
+                    Uitvoerders = reservatie.VoorstellingsNrNavigation.Uitvoerders,
+                    Prijs = reservatie.VoorstellingsNrNavigation.Prijs,
+                    Plaatsen = reservatie.Plaatsen,
+                    Status = gelukt == true ? "Reservatie gelukt" : "Reservatie niet gelukt"
+                };
+                lijstje.Add(item);
+            }
+            HttpContext.Session.SetString("mandje", string.Empty);
+            return View(lijstje);
         }
     }
 }

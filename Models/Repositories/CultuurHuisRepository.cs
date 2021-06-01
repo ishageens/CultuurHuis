@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Model.Entities;
 
 namespace Model.Repositories
@@ -17,7 +18,9 @@ namespace Model.Repositories
 
         public Reservatie Add(Reservatie reservatie)
         {
-            throw new NotImplementedException();
+            context.Reservaties.Add(reservatie);
+            context.SaveChanges();
+            return reservatie;
         }
 
         public IEnumerable<Genre> GetAllGenres()
@@ -57,5 +60,15 @@ namespace Model.Repositories
         {
             return context.Voorstellingen.Find(id);
         }
+
+        public Voorstelling Update(Voorstelling gewijzigdeVoorstelling)
+        {
+            var voorstelling = context.Voorstellingen.Attach(gewijzigdeVoorstelling);
+            voorstelling.State = EntityState.Modified;
+            context.SaveChanges();
+            return gewijzigdeVoorstelling;
+        }
+
+
     }
 }

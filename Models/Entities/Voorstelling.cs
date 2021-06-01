@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -17,6 +18,8 @@ namespace Model.Entities
         public string Uitvoerders { get; set; }
         public DateTime Datum { get; set; }
         public int GenreNr { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:#,##0.00}")]
         public decimal Prijs { get; set; }
         public short VrijePlaatsen { get; set; }
 
